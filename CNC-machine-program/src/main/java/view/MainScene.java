@@ -38,8 +38,6 @@ public class MainScene {
 
     private Stage window = null;
 
-    //controller
-
 
     public Scene display(Stage window){
 
