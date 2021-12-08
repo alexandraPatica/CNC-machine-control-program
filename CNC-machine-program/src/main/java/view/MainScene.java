@@ -56,12 +56,14 @@ public class MainScene {
         //convert file to G-code
         Text noFileText = new Text();
         Button convertToGcodeButton = new Button("Convert to G-code");
-        convertToGcodeButton.setOnAction(e -> convertToGcode(noFileText));
+        convertToGcodeButton.setOnAction(e ->
+
+                convertToGcode(noFileText));
 
         //view G-code file
         Text noGcodeFileText = new Text();
         Button viewGcodeButton = new Button("View G-code file");
-        viewGcodeButton.setOnAction(e -> openFile(new File("G-code" + file.getPath() + ".gcode"), noGcodeFileText));
+        //viewGcodeButton.setOnAction(e -> openFile(new File("G-code" + file.getPath() + ".gcode"), noGcodeFileText));
 
 
         //Start the simulation

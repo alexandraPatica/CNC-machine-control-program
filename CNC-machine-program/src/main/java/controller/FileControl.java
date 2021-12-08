@@ -9,6 +9,8 @@ import model.InputFile;
 import java.io.File;
 import java.util.List;
 
+import org.apache.commons.io.FilenameUtils;
+
 public class FileControl {
     public static void configureFileChooser(FileChooser fileChooser) {
         fileChooser.getExtensionFilters().addAll(
@@ -24,7 +26,7 @@ public class FileControl {
 
         List<GcodeElement> gCodeList = FileToGcode.convert(inputFile);
 
-        FileHandler.writeGcode(gCodeList, file.getName());
+        FileHandler.writeGcode(gCodeList, FilenameUtils.removeExtension(file.getName()));
 
     }
 }

@@ -48,6 +48,7 @@ public class InputFile {
                 }
             }
         }
+        this.elements = elems;
     }
 
     public List<ShapeElement> getElements(){

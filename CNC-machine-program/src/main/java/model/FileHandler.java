@@ -22,7 +22,7 @@ public class FileHandler {
                     .map(line -> {
                         String[] data = line.split(" |,");
                         return new ShapeElement(Shape.valueOf(data[0]), new Point(Integer.parseInt(data[1]), Integer.parseInt(data[2])),
-                               new Point(Integer.parseInt(data[2]), Integer.parseInt(data[3])), Integer.parseInt(data[4]));
+                               new Point(Integer.parseInt(data[3]), Integer.parseInt(data[4])), Integer.parseInt(data[5]));
                     })
                     .collect(Collectors.toList());
         }catch(IOException e) {
@@ -35,7 +35,7 @@ public class FileHandler {
     public static void writeGcode(List<GcodeElement> list, String name){
         try{
             java.io.FileWriter myWriter = new java.io.FileWriter("G-code"+name+".gcode", true);
-            myWriter.write("%");
+            myWriter.write("%\n");
 
             for(GcodeElement g: list){
                 StringBuffer s =  new StringBuffer();
@@ -50,12 +50,15 @@ public class FileHandler {
                     s.append(" J").append(g.getJ());
                 }
 
+                s.append("\n");
+
                 myWriter.write(String.valueOf(s));
             }
 
             myWriter.write("%");
 
-
+            myWriter.flush();
+            myWriter.close();
 
         }catch(IOException e){
             e.printStackTrace();
