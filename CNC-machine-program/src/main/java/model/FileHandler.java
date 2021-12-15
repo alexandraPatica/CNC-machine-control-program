@@ -34,7 +34,7 @@ public class FileHandler {
 
     public static void writeGcode(List<GcodeElement> list, String name){
         try{
-            java.io.FileWriter myWriter = new java.io.FileWriter("G-code"+name+".gcode", true);
+            java.io.FileWriter myWriter = new java.io.FileWriter("G-code"+name+".gcode", false);
             myWriter.write("%\n");
 
             for(GcodeElement g: list){

@@ -41,7 +41,7 @@ public class Grid {
         return p;
     }
 
-    public void setColor(int x, int y){
+    public void setColorRed(int x, int y){
         rec[x][y].setFill(Color.RED);
     }
 

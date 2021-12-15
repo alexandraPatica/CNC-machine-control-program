@@ -7,11 +7,15 @@ import model.GcodeElement;
 import model.InputFile;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 
 public class FileControl {
+
+    static  List<GcodeElement> gCodeList = new ArrayList<>();
+
     public static void configureFileChooser(FileChooser fileChooser) {
         fileChooser.getExtensionFilters().addAll(
                 //new FileChooser.ExtensionFilter("All Images", "*.*"),
@@ -24,7 +28,7 @@ public class FileControl {
     public static void convertToGcode(File file){
         InputFile inputFile = FileHandler.readFromFile(file.getPath());
 
-        List<GcodeElement> gCodeList = FileToGcode.convert(inputFile);
+        gCodeList = FileToGcode.convert(inputFile);
 
         FileHandler.writeGcode(gCodeList, FilenameUtils.removeExtension(file.getName()));
 

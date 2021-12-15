@@ -6,6 +6,7 @@ package view;
 
 
 import controller.FileControl;
+import controller.SimulationControl;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -56,9 +57,7 @@ public class MainScene {
         //convert file to G-code
         Text noFileText = new Text();
         Button convertToGcodeButton = new Button("Convert to G-code");
-        convertToGcodeButton.setOnAction(e ->
-
-                convertToGcode(noFileText));
+        convertToGcodeButton.setOnAction(e -> convertToGcode(noFileText));
 
         //view G-code file
         Text noGcodeFileText = new Text();
@@ -69,8 +68,9 @@ public class MainScene {
         //Start the simulation
         //TODO
         Button startSimulationButton = new Button("Start simulation");
-        startSimulationButton.setOnAction(e -> GridView.display(50));
-
+        startSimulationButton.setOnAction(e -> {
+            GridView.display(50);
+        });
 
 
         GridPane gridPane = new GridPane();
