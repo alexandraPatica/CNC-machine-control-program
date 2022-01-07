@@ -1,4 +1,4 @@
-package controller;
+package model;
 
 import model.Gcode;
 import model.GcodeElement;
