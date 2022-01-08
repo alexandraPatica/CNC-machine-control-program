@@ -1,9 +1,6 @@
 package controller;
 
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.*;
 import model.GcodeElement;
 import model.GcodeInterpreter;
 import model.Point;
@@ -18,9 +15,14 @@ public class SimulationControl {
         path.getElements().add(new MoveTo(0, 0));
 
         for (GcodeElement gcodeElement: FileControl.gCodeList){
+            double radius = 0.0;
+            ArcTo arcTo = new ArcTo();
+
             switch (gcodeElement.getCode()){
                 case G00:
                     path.getElements().add(new MoveTo(gcodeElement.getX(), gcodeElement.getY()));
+                    lastPoint.setX(gcodeElement.getX());
+                    lastPoint.setY(gcodeElement.getY());
                     break;
                 case G21:
                     break;
@@ -29,15 +31,46 @@ public class SimulationControl {
                     break;
                 case G01:
                     path.getElements().add(new LineTo(gcodeElement.getX(), gcodeElement.getY()));
+                    lastPoint.setX(gcodeElement.getX());
+                    lastPoint.setY(gcodeElement.getY());
+                    break;
+
+                case G02:
+
+                    radius = Math.sqrt(gcodeElement.getI()*gcodeElement.getI() + gcodeElement.getJ()* gcodeElement.getJ());
+                    arcTo.setX(gcodeElement.getX());
+                    arcTo.setY(gcodeElement.getY());
+                    arcTo.setRadiusX(radius);
+                    arcTo.setRadiusY(radius);
+                    arcTo.setSweepFlag(true);
+                    path.getElements().add(arcTo);
+
+
+                    lastPoint.setX(gcodeElement.getX());
+                    lastPoint.setY(gcodeElement.getY());
+                    break;
+
+                case G03:
+                    radius = Math.sqrt(gcodeElement.getI()*gcodeElement.getI() + gcodeElement.getJ()* gcodeElement.getJ());
+                    arcTo.setX(gcodeElement.getX());
+                    arcTo.setY(gcodeElement.getY());
+                    arcTo.setRadiusX(radius);
+                    arcTo.setRadiusY(radius);
+                    arcTo.setSweepFlag(false);
+                    path.getElements().add(arcTo);
+
+                    lastPoint.setX(gcodeElement.getX());
+                    lastPoint.setY(gcodeElement.getY());
+                    break;
+
+                case G28:
+                    path.getElements().add(new MoveTo(0, 0));
                     break;
 
                 default:
                     break;
             }
         }
-
-
-
         return path;
     }
 }

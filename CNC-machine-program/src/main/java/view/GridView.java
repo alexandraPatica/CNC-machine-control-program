@@ -27,6 +27,8 @@ public class GridView {
     private Stage window;
     private static Grid grid;
     private static Circle circle = new Circle();
+    private static Button startButton = new Button("Start");
+    private static boolean isPlaying = false;
 
     public static void display(int n) {
 
@@ -50,16 +52,24 @@ public class GridView {
         //Setting the stroke width of the circle
         circle.setStrokeWidth(20);
 
-        Button startButton = new Button("Start");
-        startButton.setOnAction(e -> {
-            pathTransition.setNode(circle);
-            pathTransition.setDuration(Duration.seconds(3));
-            Path path = SimulationControl.getPath();
-            pathTransition.setPath(path);
-            pathTransition.setCycleCount(PathTransition.INDEFINITE);
-            fillGrid(n, path);
-            pathTransition.play();
 
+        startButton.setOnAction(e -> {
+            if (isPlaying){
+                isPlaying = false;
+                pathTransition.stop();
+                startButton.setText("Start");
+            }
+            else{
+                isPlaying = true;
+                pathTransition.setNode(circle);
+                pathTransition.setDuration(Duration.seconds(3));
+                Path path = SimulationControl.getPath();
+                pathTransition.setPath(path);
+                pathTransition.setCycleCount(PathTransition.INDEFINITE);
+                fillGrid(n, path);
+                pathTransition.play();
+                startButton.setText("Stop");
+            }
         });
 
         /*pathTransition.setNode(circle);
