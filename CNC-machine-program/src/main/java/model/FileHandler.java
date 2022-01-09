@@ -64,4 +64,39 @@ public class FileHandler {
             e.printStackTrace();
         }
     }
+
+    public static List<GcodeElement> readGcodeFile(String pathToFile){
+        List<GcodeElement> elements = new ArrayList<>();
+
+        try(Stream<String> stream = Files.lines(Paths.get(pathToFile))){
+            elements = stream
+                    .filter(line -> !line.startsWith("%"))
+                    .map(line -> {
+                        String[] data = line.split(" ");
+                        Gcode code = Gcode.valueOf(data[0]);
+                        if (data.length == 1){
+                            return new GcodeElement(code);
+                        }
+                        else {
+                            Integer x = Integer.parseInt(data[1].substring(1));
+                            Integer y = Integer.parseInt(data[2].substring(1));
+
+                            if (data.length == 3){
+                                return new GcodeElement(code, x, y);
+                            }
+                            else{
+                                Integer i = Integer.parseInt(data[3].substring(1));
+                                Integer j = Integer.parseInt(data[4].substring(1));
+
+                                return new GcodeElement(code, x, y, i, j);
+                            }
+                        }
+                    })
+                    .collect(Collectors.toList());
+        }catch(IOException e) {
+            e.printStackTrace();
+        }
+
+        return elements;
+    }
 }

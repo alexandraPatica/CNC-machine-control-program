@@ -14,7 +14,7 @@ import org.apache.commons.io.FilenameUtils;
 
 public class FileControl {
 
-    static  List<GcodeElement> gCodeList = new ArrayList<>();
+    public static File file;
 
     public static void configureFileChooser(FileChooser fileChooser) {
         fileChooser.getExtensionFilters().addAll(
@@ -26,9 +26,11 @@ public class FileControl {
     }
 
     public static void convertToGcode(File file){
+        FileControl.file = file;
+
         InputFile inputFile = FileHandler.readFromFile(file.getPath());
 
-        gCodeList = FileToGcode.convert(inputFile);
+        List<GcodeElement> gCodeList = FileToGcode.convert(inputFile);
 
         FileHandler.writeGcode(gCodeList, FilenameUtils.removeExtension(file.getName()));
 

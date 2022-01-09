@@ -1,10 +1,14 @@
 package controller;
 
 import javafx.scene.shape.*;
+import model.FileHandler;
 import model.GcodeElement;
 import model.GcodeInterpreter;
 import model.Point;
+import org.apache.commons.io.FilenameUtils;
 import view.GridView;
+
+import java.util.List;
 
 public class SimulationControl {
 
@@ -14,7 +18,9 @@ public class SimulationControl {
         Path path = new Path();
         path.getElements().add(new MoveTo(0, 0));
 
-        for (GcodeElement gcodeElement: FileControl.gCodeList){
+        List<GcodeElement> gCodeList = FileHandler.readGcodeFile("G-code"+FilenameUtils.removeExtension(FileControl.file.getName())+".gcode");
+
+        for (GcodeElement gcodeElement: gCodeList){
             double radius = 0.0;
             ArcTo arcTo = new ArcTo();
 

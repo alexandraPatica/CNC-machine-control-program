@@ -6,16 +6,23 @@ import java.util.List;
 public class FileToGcode {
 
     public static List<GcodeElement> convert(InputFile inputFile){
-        inputFile.sortElements();
+        //inputFile.sortElements();
 
         List<GcodeElement> list = new ArrayList<>();
         list.add(new GcodeElement(Gcode.G21));
         list.add(new GcodeElement(Gcode.G17));
         list.add(new GcodeElement(Gcode.G00, inputFile.getElements().get(0).getStartPoint().getX(),
                                              inputFile.getElements().get(0).getStartPoint().getY()));
+        Point lastPoint = new Point(inputFile.getElements().get(0).getStartPoint().getX(), inputFile.getElements().get(0).getStartPoint().getY());
         int size = list.size();
 
         for(int i=0; i<size; i++){
+
+            if (lastPoint != inputFile.getElement(i).getStartPoint()){
+                list.add(new GcodeElement(Gcode.G00, inputFile.getElement(i).getStartPoint().getX(),
+                                                     inputFile.getElement(i).getStartPoint().getY()));
+            }
+
             if (inputFile.getElement(i).getShape() == Shape.ARC){
                 //determine if clockwise or counterclockwise
                 Point endPointLastElement = null;
@@ -58,6 +65,8 @@ public class FileToGcode {
             }else{
                 list.add(new GcodeElement(Gcode.G01, inputFile.getElement(i).getEndPoint().getX(), inputFile.getElement(i).getEndPoint().getY()));
             }
+
+            lastPoint = inputFile.getElement(i).getEndPoint();
         }
         list.add(new GcodeElement( Gcode.G28, 0, 0));
         list.add(new GcodeElement(Gcode.M05));
