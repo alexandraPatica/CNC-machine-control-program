@@ -12,6 +12,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -65,16 +66,29 @@ public class MainScene {
         //viewGcodeButton.setOnAction(e -> openFile(new File("G-code" + file.getPath() + ".gcode"), noGcodeFileText));
 
 
+        Label choiceBoxLabel = new Label("Choose grid size");
+        ChoiceBox<Integer> choiceBox = new ChoiceBox<Integer>();
+
+        for (int i=40; i<100; i++){
+            choiceBox.getItems().add(i);
+        }
+
+        choiceBox.setValue(50);
+
+
+
+
         //Start the simulation
         //TODO
         Button startSimulationButton = new Button("Start simulation");
         startSimulationButton.setOnAction(e -> {
-            GridView.display(50);
+            GridView.display(choiceBox.getValue());
         });
 
 
         GridPane gridPane = new GridPane();
-        gridPane.getChildren().addAll(chooseFileButton, startSimulationButton, openResultText, convertToGcodeButton, viewGcodeButton, noFileText);
+        gridPane.getChildren().addAll(chooseFileButton, startSimulationButton, openResultText, convertToGcodeButton, viewGcodeButton, noFileText,
+                choiceBox, choiceBoxLabel);
         gridPane.setPadding( new Insets(10, 10, 10, 10)); //padding for the grid margins
         gridPane.setVgap(8);//set vertical spacing between cells
         gridPane.setVgap(10); //horizontal spacing
@@ -84,7 +98,9 @@ public class MainScene {
         GridPane.setConstraints(convertToGcodeButton, 0, 1);
         GridPane.setConstraints(noFileText, 1, 1);
         GridPane.setConstraints(viewGcodeButton, 0, 2);
-        GridPane.setConstraints(startSimulationButton, 0, 3);
+        GridPane.setConstraints(choiceBoxLabel, 0, 3);
+        GridPane.setConstraints(choiceBox, 1, 3);
+        GridPane.setConstraints(startSimulationButton, 0, 4);
 
         gridMainScene.getChildren().add(gridPane);
 

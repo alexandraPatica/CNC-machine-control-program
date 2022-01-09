@@ -28,7 +28,9 @@ public class GridView {
     private static Grid grid;
     private static Circle circle = new Circle();
     private static Button startButton = new Button("Start");
+    private static Button pauseButton = new Button("Pause");
     private static boolean isPlaying = false;
+    private static boolean isPaused = false;
 
     public static void display(int n) {
 
@@ -52,12 +54,13 @@ public class GridView {
         //Setting the stroke width of the circle
         circle.setStrokeWidth(20);
 
-
+        pauseButton.setVisible(false);
         startButton.setOnAction(e -> {
             if (isPlaying){
                 isPlaying = false;
                 pathTransition.stop();
                 startButton.setText("Start");
+                pauseButton.setVisible(false);
             }
             else{
                 isPlaying = true;
@@ -69,17 +72,25 @@ public class GridView {
                 fillGrid(n, path);
                 pathTransition.play();
                 startButton.setText("Stop");
+                pauseButton.setVisible(true);
             }
         });
 
-        /*pathTransition.setNode(circle);
-        pathTransition.setDuration(Duration.seconds(3));
-        pathTransition.setPath(SimulationControl.getPath());
-        pathTransition.setCycleCount(PathTransition.INDEFINITE);
-        pathTransition.play();*/
+        pauseButton.setOnAction(e -> {
+            if (isPaused) {
+                isPaused = false;
+                pathTransition.play();
+                pauseButton.disarm();
+            }else{
+                isPaused = true;
+                pathTransition.pause();
+                pauseButton.arm();
+            }
+        });
 
-        //VBox vBox = new VBox(startButton, grid.makeGrid(n), circle);
-        Group group = new Group(grid.getGridPane(), startButton, circle);
+
+        HBox hBox = new HBox(startButton, pauseButton);
+        Group group = new Group(grid.getGridPane(), hBox, circle);
 
 
         window.initModality(Modality.APPLICATION_MODAL); //block interactions with other window until this is closed
