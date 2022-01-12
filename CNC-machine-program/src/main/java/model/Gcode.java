@@ -1,7 +1,6 @@
 package model;
 
 public enum Gcode {
-    M03,
     M05,  //Spindle stop
     M30,  //End of program
     G00,  //Rapid Positioning

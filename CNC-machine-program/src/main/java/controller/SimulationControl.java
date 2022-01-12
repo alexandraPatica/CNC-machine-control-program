@@ -1,12 +1,9 @@
 package controller;
 
 import javafx.scene.shape.*;
-import model.FileHandler;
 import model.GcodeElement;
-import model.GcodeInterpreter;
 import model.Point;
 import org.apache.commons.io.FilenameUtils;
-import view.GridView;
 
 import java.util.List;
 

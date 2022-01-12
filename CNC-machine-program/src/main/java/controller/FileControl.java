@@ -1,13 +1,10 @@
 package controller;
 
 import javafx.stage.FileChooser;
-import model.FileHandler;
-import model.FileToGcode;
 import model.GcodeElement;
 import model.InputFile;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;

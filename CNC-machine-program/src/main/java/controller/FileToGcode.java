@@ -1,4 +1,6 @@
-package model;
+package controller;
+
+import model.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +8,6 @@ import java.util.List;
 public class FileToGcode {
 
     public static List<GcodeElement> convert(InputFile inputFile){
-        //inputFile.sortElements();
-
         List<GcodeElement> list = new ArrayList<>();
         list.add(new GcodeElement(Gcode.G21));
         list.add(new GcodeElement(Gcode.G17));

@@ -6,9 +6,6 @@ public class ShapeElement {
     private Point endPoint;
     private int radius;
 
-    public ShapeElement(){
-    }
-
     public ShapeElement(Shape shape, Point startPoint, Point endPoint, int radius){
         this.shape = shape;
         this.startPoint = startPoint;
@@ -20,31 +17,15 @@ public class ShapeElement {
         return shape;
     }
 
-    public void setShape(Shape shape) {
-        this.shape = shape;
-    }
-
     public Point getStartPoint() {
         return startPoint;
-    }
-
-    public void setStartPoint(Point startPoint) {
-        this.startPoint = startPoint;
     }
 
     public Point getEndPoint() {
         return endPoint;
     }
 
-    public void setEndPoint(Point endPoint) {
-        this.endPoint = endPoint;
-    }
-
     public int getRadius() {
         return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
     }
 }

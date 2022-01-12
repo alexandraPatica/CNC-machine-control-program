@@ -29,39 +29,22 @@ public class GcodeElement {
         return code;
     }
 
-    public void setCode(Gcode code) {
-        this.code = code;
-    }
 
     public Integer getX() {
         return x;
     }
 
-    public void setX(Integer x) {
-        this.x = x;
-    }
 
     public Integer getY() {
         return y;
-    }
-
-    public void setY(Integer y) {
-        this.y = y;
     }
 
     public Integer getI() {
         return i;
     }
 
-    public void setI(Integer i) {
-        this.i = i;
-    }
-
     public Integer getJ() {
         return j;
     }
 
-    public void setJ(Integer j) {
-        this.j = j;
-    }
 }

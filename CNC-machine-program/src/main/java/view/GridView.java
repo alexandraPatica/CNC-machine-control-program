@@ -8,23 +8,14 @@ import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Path;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Arrays;
 
 public class GridView {
 
-    private Stage window;
     private static Grid grid;
     private static Circle circle = new Circle();
     private static Button startButton = new Button("Start");
@@ -59,6 +50,7 @@ public class GridView {
             if (isPlaying){
                 isPlaying = false;
                 pathTransition.stop();
+                pathTransition.setPath(null);
                 startButton.setText("Start");
                 pauseButton.setVisible(false);
             }
@@ -101,7 +93,10 @@ public class GridView {
         window.setResizable(false);
         window.showAndWait();
 
-       // ((Path)Shape.intersect(transition.getPath(),cell)).getElements().size()>0
+        window.setOnCloseRequest(e -> {
+            pathTransition.stop();
+            pathTransition.setPath(null);
+        });
     }
 
     private static void fillGrid(int n, Path path){
@@ -112,10 +107,22 @@ public class GridView {
                 }
             }
         }
+
+       /* for (int x = 1; x < n-1; x++){
+            for (int y = 1; y < n-1; y++){
+                if (grid.getGrid()[x][y].getFill().equals(Color.RED)) {
+                    if (grid.getGrid()[x - 1][y].getFill().equals(Color.RED) && grid.getGrid()[x + 1][y].getFill().equals(Color.RED)) {
+                        grid.getGrid()[x][y - 1].setFill(Color.WHITE);
+                        grid.getGrid()[x][y + 1].setFill(Color.WHITE);
+                    }
+                    if (grid.getGrid()[x][y - 1].getFill().equals(Color.RED) && grid.getGrid()[x][y + 1].getFill().equals(Color.RED)) {
+                        grid.getGrid()[x - 1][y].setFill(Color.WHITE);
+                        grid.getGrid()[x + 1][y].setFill(Color.WHITE);
+                    }
+                }
+            }
+        }*/
     }
 
-    public static void setTileColor(int x, int y){
-        grid.setColorRed(x, y);
-    }
 
 }
